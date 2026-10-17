@@ -1,10 +1,10 @@
 /* ---------------------------------------------------------------
    Site-wide script. The only thing you ever need to edit is the
-   ADSENSE_CLIENT value below. Leave it empty until Google approves
-   your site, then paste your publisher ID (looks like ca-pub-1234…).
+   ADSENSE_CLIENT value below. Set once you have an AdSense account (done). Clear it to turn ads off.
+   The ID is the account publisher ID from AdSense.
    Auto ads are used, so no per-page ad slot IDs are required.
    --------------------------------------------------------------- */
-const ADSENSE_CLIENT = "";
+const ADSENSE_CLIENT = "ca-pub-6122961547647042";
 
 (function () {
   document.querySelectorAll("[data-year]").forEach(el => el.textContent = new Date().getFullYear());
