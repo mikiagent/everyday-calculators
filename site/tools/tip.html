@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tip Calculator · Everyday Calculators</title>
+<meta name="description" content="Work out the tip and total for a restaurant bill, and split it evenly between people.">
+<meta property="og:title" content="Tip Calculator · Everyday Calculators">
+<meta property="og:description" content="Work out the tip and total for a restaurant bill, and split it evenly between people.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Tip Calculator</span></nav>
+  <h1>Tip Calculator</h1>
+  <p class="lead">Work out the tip and total for a restaurant bill, and split it evenly between people.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <div class="row">
+    <label>Bill amount <input type="number" id="bill" value="68.50" step="0.01" min="0"></label>
+    <label>Tip % <input type="number" id="tip" value="18" step="1" min="0"></label>
+    <label>Split between <input type="number" id="split" value="2" step="1" min="1"></label>
+  </div>
+  <div class="chips" id="chips">
+    <button type="button" data-t="10">10%</button><button type="button" data-t="15">15%</button><button type="button" data-t="18">18%</button><button type="button" data-t="20">20%</button><button type="button" data-t="25">25%</button>
+  </div>
+  <dl class="stats">
+    <div><dt>Tip</dt><dd id="r-tip">$0.00</dd></div>
+    <div><dt>Total</dt><dd id="r-total">$0.00</dd></div>
+    <div><dt>Per person</dt><dd id="r-each">$0.00</dd></div>
+  </dl>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>How much should you tip?</h2>
+<p>In the United States, 15% to 20% of the pre-tax bill is the usual range for table service, with 18% to 20% now common in cities. Counter service and takeout are often tipped less, or not at all. In many other countries service is included and tipping is a small gesture rather than an expectation, so check local custom when travelling.</p>
+<h3>Tips for splitting the bill</h3>
+<ul>
+<li>Decide the tip on the whole bill first, then divide, so everyone contributes equally to service.</li>
+<li>Round each share up to a convenient amount; the few cents of difference go to the server.</li>
+<li>If one person ordered far more, split by items instead and add the same percentage to each share.</li>
+</ul>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li><li><a href="/tools/compound-interest">Compound Interest Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id), money=x=>'$'+(isFinite(x)?x:0).toFixed(2);
+function upd(){
+  const b=parseFloat($('bill').value)||0,t=parseFloat($('tip').value)||0,s=Math.max(1,parseInt($('split').value)||1);
+  const tip=b*t/100,total=b+tip;
+  $('r-tip').textContent=money(tip);$('r-total').textContent=money(total);$('r-each').textContent=money(total/s);
+  document.querySelectorAll('#chips button').forEach(c=>c.classList.toggle('on',+c.dataset.t===t));
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));
+document.querySelectorAll('#chips button').forEach(c=>c.addEventListener('click',()=>{$('tip').value=c.dataset.t;upd();}));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

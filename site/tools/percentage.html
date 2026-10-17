@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percentage Calculator · Everyday Calculators</title>
+<meta name="description" content="Find what percent one number is of another, add or subtract a percentage, and work out percentage change.">
+<meta property="og:title" content="Percentage Calculator · Everyday Calculators">
+<meta property="og:description" content="Find what percent one number is of another, add or subtract a percentage, and work out percentage change.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Percentage Calculator</span></nav>
+  <h1>Percentage Calculator</h1>
+  <p class="lead">Find what percent one number is of another, add or subtract a percentage, and work out percentage change.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <h2 class="sub">What is X% of Y?</h2>
+  <div class="row"><label>Percent <input type="number" id="p1a" value="15" step="any"></label>
+  <span class="of">% of</span>
+  <label>Value <input type="number" id="p1b" value="200" step="any"></label></div>
+  <output id="p1r" class="result">30</output>
+</div>
+<div class="calc">
+  <h2 class="sub">X is what percent of Y?</h2>
+  <div class="row"><label>Part <input type="number" id="p2a" value="45" step="any"></label>
+  <span class="of">is what % of</span>
+  <label>Whole <input type="number" id="p2b" value="180" step="any"></label></div>
+  <output id="p2r" class="result">25%</output>
+</div>
+<div class="calc">
+  <h2 class="sub">Percentage change</h2>
+  <div class="row"><label>From <input type="number" id="p3a" value="80" step="any"></label>
+  <span class="of">to</span>
+  <label>To <input type="number" id="p3b" value="100" step="any"></label></div>
+  <output id="p3r" class="result">+25%</output>
+</div>
+<div class="calc">
+  <h2 class="sub">Add or subtract a percentage</h2>
+  <div class="row"><label>Value <input type="number" id="p4a" value="120" step="any"></label>
+  <label>Percent <input type="number" id="p4b" value="20" step="any"></label></div>
+  <output id="p4r" class="result">+20% = 144 · −20% = 96</output>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>How percentages work</h2>
+<p>A percentage is a fraction out of one hundred. "15% of 200" means 15 hundredths of 200, so you multiply 200 by 0.15 to get 30. To find what percent one number is of another, divide the part by the whole and multiply by 100.</p>
+<h3>Percentage change</h3>
+<p>Percentage change compares a new value with an original value: subtract the original from the new value, divide by the original, then multiply by 100. Going from 80 to 100 is a 25% increase, but going from 100 back to 80 is only a 20% decrease, because the base you divide by is different.</p>
+<h3>Common uses</h3>
+<ul>
+<li>Working out a discount in a sale: a 30% discount on $60 saves $18, so you pay $42.</li>
+<li>Adding sales tax or VAT to a price.</li>
+<li>Comparing growth between two periods, such as monthly revenue or website visits.</li>
+<li>Grading: 45 correct out of 60 questions is 75%.</li>
+</ul>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li><li><a href="/tools/compound-interest">Compound Interest Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id), n=id=>parseFloat($(id).value), f=x=>isFinite(x)?Number(x.toFixed(4)).toLocaleString():'—';
+function upd(){
+  $('p1r').textContent=f(n('p1a')/100*n('p1b'));
+  $('p2r').textContent=n('p2b')?f(n('p2a')/n('p2b')*100)+'%':'—';
+  const a=n('p3a'),b=n('p3b'),c=a?((b-a)/Math.abs(a))*100:NaN;
+  $('p3r').textContent=isFinite(c)?(c>=0?'+':'')+f(c)+'%':'—';
+  const v=n('p4a'),p=n('p4b');
+  $('p4r').textContent=`+${f(p)}% = ${f(v*(1+p/100))} · −${f(p)}% = ${f(v*(1-p/100))}`;
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

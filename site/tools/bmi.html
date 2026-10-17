@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BMI Calculator · Everyday Calculators</title>
+<meta name="description" content="Calculate your body mass index from height and weight in metric or imperial units.">
+<meta property="og:title" content="BMI Calculator · Everyday Calculators">
+<meta property="og:description" content="Calculate your body mass index from height and weight in metric or imperial units.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>BMI Calculator</span></nav>
+  <h1>BMI Calculator</h1>
+  <p class="lead">Calculate your body mass index from height and weight in metric or imperial units.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <div class="seg" role="tablist">
+    <button type="button" class="on" data-u="metric">Metric</button><button type="button" data-u="imperial">Imperial</button>
+  </div>
+  <div class="row" id="metric">
+    <label>Height (cm) <input type="number" id="hcm" value="175" step="any" min="0"></label>
+    <label>Weight (kg) <input type="number" id="wkg" value="70" step="any" min="0"></label>
+  </div>
+  <div class="row hide" id="imperial">
+    <label>Height (ft) <input type="number" id="hft" value="5" step="1" min="0"></label>
+    <label>Height (in) <input type="number" id="hin" value="9" step="any" min="0"></label>
+    <label>Weight (lb) <input type="number" id="wlb" value="154" step="any" min="0"></label>
+  </div>
+  <output id="bmi" class="result big">22.9</output>
+  <p id="cat" class="note">Normal weight</p>
+  <div class="scale"><span style="background:#60a5fa">Under &lt;18.5</span><span style="background:#34d399">Normal 18.5–24.9</span><span style="background:#fbbf24">Over 25–29.9</span><span style="background:#f87171">Obese ≥30</span></div>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>What BMI measures</h2>
+<p>Body mass index divides your weight in kilograms by the square of your height in metres. The World Health Organization groups results as underweight below 18.5, normal weight from 18.5 to 24.9, overweight from 25 to 29.9, and obese at 30 or above.</p>
+<h3>Limitations</h3>
+<p>BMI is a screening number, not a diagnosis. It cannot tell muscle from fat, so athletes often score as overweight while carrying little body fat, and it does not account for age, sex, bone density or where fat is distributed. Thresholds may also differ for some ethnic groups and are not meant for children, who use age-adjusted charts. Treat the result as a prompt to talk with a health professional rather than a verdict.</p>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li><li><a href="/tools/compound-interest">Compound Interest Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id);let unit='metric';
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{unit=b.dataset.u;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));$('metric').classList.toggle('hide',unit!=='metric');$('imperial').classList.toggle('hide',unit!=='imperial');upd();}));
+function upd(){
+  let h,w;
+  if(unit==='metric'){h=parseFloat($('hcm').value)/100;w=parseFloat($('wkg').value);}
+  else{h=((parseFloat($('hft').value)||0)*12+(parseFloat($('hin').value)||0))*0.0254;w=parseFloat($('wlb').value)*0.45359237;}
+  const b=w/(h*h);
+  if(!isFinite(b)||b<=0){$('bmi').textContent='—';$('cat').textContent='';return;}
+  $('bmi').textContent=b.toFixed(1);
+  $('cat').textContent=b<18.5?'Underweight':b<25?'Normal weight':b<30?'Overweight':'Obese';
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

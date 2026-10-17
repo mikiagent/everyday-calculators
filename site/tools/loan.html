@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan Payment Calculator · Everyday Calculators</title>
+<meta name="description" content="Estimate the monthly payment, total interest and total cost of a mortgage, car loan or personal loan.">
+<meta property="og:title" content="Loan Payment Calculator · Everyday Calculators">
+<meta property="og:description" content="Estimate the monthly payment, total interest and total cost of a mortgage, car loan or personal loan.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Loan Payment Calculator</span></nav>
+  <h1>Loan Payment Calculator</h1>
+  <p class="lead">Estimate the monthly payment, total interest and total cost of a mortgage, car loan or personal loan.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <div class="row">
+    <label>Loan amount <input type="number" id="amt" value="300000" step="any" min="0"></label>
+    <label>Interest rate (% per year) <input type="number" id="rate" value="6.5" step="0.01" min="0"></label>
+    <label>Term (years) <input type="number" id="yrs" value="30" step="1" min="1"></label>
+  </div>
+  <dl class="stats">
+    <div><dt>Monthly payment</dt><dd id="pay">—</dd></div>
+    <div><dt>Total interest</dt><dd id="int">—</dd></div>
+    <div><dt>Total paid</dt><dd id="tot">—</dd></div>
+  </dl>
+  <details class="more"><summary>Show yearly breakdown</summary><div class="tablewrap"><table id="amort"><thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody></tbody></table></div></details>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>How loan payments are calculated</h2>
+<p>A fixed-rate loan is repaid in equal instalments. Each payment covers that month's interest on the remaining balance, and the rest reduces the balance. Early on most of the payment is interest; later most of it is principal. The standard formula is M = P × r / (1 − (1 + r)<sup>−n</sup>), where P is the amount borrowed, r the monthly rate and n the number of payments.</p>
+<h3>What is not included</h3>
+<p>This calculator covers principal and interest only. A real mortgage payment usually also includes property tax, home insurance and sometimes mortgage insurance or association fees, which can add a quarter or more to the monthly figure. Lenders may also charge origination fees that increase the true cost of borrowing.</p>
+<h3>Ways to pay less interest</h3>
+<ul>
+<li>Choose a shorter term: a 15-year loan has higher monthly payments but far less total interest than a 30-year one.</li>
+<li>Make occasional extra principal payments, which shorten the loan without changing the required payment.</li>
+<li>Compare rates from several lenders; a quarter of a percent matters over decades.</li>
+</ul>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/compound-interest">Compound Interest Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id),money=x=>x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+function upd(){
+  const P=parseFloat($('amt').value)||0,r=(parseFloat($('rate').value)||0)/100/12,n=Math.round((parseFloat($('yrs').value)||0)*12);
+  if(!P||!n){return;}
+  const m=r?P*r/(1-Math.pow(1+r,-n)):P/n;
+  $('pay').textContent=m.toLocaleString(undefined,{style:'currency',currency:'USD'});
+  $('int').textContent=money(m*n-P);$('tot').textContent=money(m*n);
+  let bal=P,rows='';
+  for(let y=1;y<=n/12;y++){let pi=0,ii=0;for(let k=0;k<12&&bal>0;k++){const i=bal*r,p=Math.min(m-i,bal);pi+=p;ii+=i;bal-=p;}
+    rows+=`<tr><td>${y}</td><td>${money(pi)}</td><td>${money(ii)}</td><td>${money(Math.max(0,bal))}</td></tr>`;}
+  $('amort').querySelector('tbody').innerHTML=rows;
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

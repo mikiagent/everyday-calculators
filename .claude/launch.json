@@ -1,0 +1,8 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "static-site", "runtimeExecutable": "node",
+      "runtimeArgs": ["/private/tmp/claude-501/-Users-milankinzy-Library-Application-Support-Claude-scratch-workspaces-3721a0bc-c1dc-4528-b964-a22b61c02dfe-def00bc6-0b21-4d86-a751-460e71208563-scratch-2026-10-17-c634bc/61112112-e61c-48c0-8409-52ddee5d4890/scratchpad/serve.mjs", "/Users/milankinzy/Library/Application Support/Claude/scratch-workspaces/3721a0bc-c1dc-4528-b964-a22b61c02dfe/def00bc6-0b21-4d86-a751-460e71208563/scratch-2026-10-17-c634bc/site"],
+      "port": 4173 }
+  ]
+}

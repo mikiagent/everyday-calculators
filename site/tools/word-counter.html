@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word & Character Counter · Everyday Calculators</title>
+<meta name="description" content="Count words, characters, sentences and paragraphs, and estimate reading time as you type.">
+<meta property="og:title" content="Word & Character Counter · Everyday Calculators">
+<meta property="og:description" content="Count words, characters, sentences and paragraphs, and estimate reading time as you type.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Word & Character Counter</span></nav>
+  <h1>Word & Character Counter</h1>
+  <p class="lead">Count words, characters, sentences and paragraphs, and estimate reading time as you type.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <textarea id="txt" rows="10" placeholder="Paste or type your text here…" aria-label="Text to count"></textarea>
+  <dl class="stats five">
+    <div><dt>Words</dt><dd id="w">0</dd></div>
+    <div><dt>Characters</dt><dd id="c">0</dd></div>
+    <div><dt>No spaces</dt><dd id="cs">0</dd></div>
+    <div><dt>Sentences</dt><dd id="s">0</dd></div>
+    <div><dt>Paragraphs</dt><dd id="p">0</dd></div>
+  </dl>
+  <p class="note" id="rt">Reading time: 0 min · Speaking time: 0 min</p>
+  <div class="chips"><button type="button" id="clear">Clear</button><button type="button" id="copy">Copy text</button></div>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>Why word counts matter</h2>
+<p>Many formats have length limits or expectations. A tweet allows 280 characters, a meta description should stay under about 160, college essays often cap at 650 words, and a typical blog post runs 1,000 to 2,000 words. Knowing the count as you write avoids a painful trim at the end.</p>
+<h3>How the estimates work</h3>
+<p>Reading time assumes about 238 words per minute, the average for adults reading non-fiction silently. Speaking time uses 150 words per minute, a comfortable pace for presentations. Sentences are counted by terminal punctuation, so abbreviations like "e.g." can inflate the number slightly.</p>
+<p>Nothing you type here leaves your browser. The counting happens on your device and the text is not stored or sent anywhere.</p>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id),t=$('txt');
+function upd(){const v=t.value,words=(v.trim().match(/\S+/g)||[]).length;
+ $('w').textContent=words.toLocaleString();$('c').textContent=v.length.toLocaleString();$('cs').textContent=v.replace(/\s/g,'').length.toLocaleString();
+ $('s').textContent=(v.match(/[^.!?]+[.!?]+(\s|$)/g)||(v.trim()?[1]:[])).length;
+ $('p').textContent=v.trim()?v.trim().split(/\n\s*\n/).length:0;
+ const rm=Math.ceil(words/238),sm=Math.ceil(words/150);
+ $('rt').textContent=`Reading time: ${rm} min · Speaking time: ${sm} min`;}
+t.addEventListener('input',upd);$('clear').addEventListener('click',()=>{t.value='';upd();t.focus();});
+$('copy').addEventListener('click',()=>navigator.clipboard&&navigator.clipboard.writeText(t.value));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

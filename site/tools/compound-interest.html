@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound Interest Calculator · Everyday Calculators</title>
+<meta name="description" content="See how savings or investments grow over time with regular contributions and compounding.">
+<meta property="og:title" content="Compound Interest Calculator · Everyday Calculators">
+<meta property="og:description" content="See how savings or investments grow over time with regular contributions and compounding.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Compound Interest Calculator</span></nav>
+  <h1>Compound Interest Calculator</h1>
+  <p class="lead">See how savings or investments grow over time with regular contributions and compounding.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <div class="row">
+    <label>Starting amount <input type="number" id="p" value="10000" step="any" min="0"></label>
+    <label>Monthly contribution <input type="number" id="c" value="200" step="any" min="0"></label>
+    <label>Annual return (%) <input type="number" id="r" value="7" step="0.1"></label>
+    <label>Years <input type="number" id="y" value="20" step="1" min="1" max="100"></label>
+  </div>
+  <dl class="stats">
+    <div><dt>Final balance</dt><dd id="fv">—</dd></div>
+    <div><dt>Total contributed</dt><dd id="in">—</dd></div>
+    <div><dt>Growth</dt><dd id="gr">—</dd></div>
+  </dl>
+  <div class="chart" id="chart" aria-label="Balance by year"></div>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>Why compounding matters</h2>
+<p>Compound interest means you earn returns on your previous returns, not only on the money you put in. Over short periods the effect is small, but across decades it dominates: at 7% a year, money doubles roughly every ten years, so a dollar invested at 25 is worth about sixteen dollars at 65 before any further contributions.</p>
+<h3>Assumptions in this calculator</h3>
+<ul>
+<li>Returns are compounded monthly at a constant rate. Real investment returns vary from year to year.</li>
+<li>Contributions are added at the end of each month.</li>
+<li>Taxes, fees and inflation are not included. Inflation of 2% to 3% a year meaningfully reduces what the final balance will buy.</li>
+</ul>
+<p>Use the result to compare scenarios, such as starting five years earlier or adding $50 a month, rather than as a prediction of a specific future balance.</p>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id),money=x=>x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+function upd(){
+  const P=parseFloat($('p').value)||0,C=parseFloat($('c').value)||0,r=(parseFloat($('r').value)||0)/100/12,Y=Math.min(100,Math.max(1,parseInt($('y').value)||1));
+  let bal=P,pts=[P];
+  for(let m=1;m<=Y*12;m++){bal=bal*(1+r)+C;if(m%12===0)pts.push(bal);}
+  const contributed=P+C*Y*12;
+  $('fv').textContent=money(bal);$('in').textContent=money(contributed);$('gr').textContent=money(bal-contributed);
+  const max=Math.max(...pts)||1;
+  $('chart').innerHTML=pts.map((v,i)=>`<i style="height:${(v/max*100).toFixed(1)}%" title="Year ${i}: ${money(v)}"></i>`).join('');
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Days Between Dates · Everyday Calculators</title>
+<meta name="description" content="Count the days, weeks, months and years between two dates, or add days to a date.">
+<meta property="og:title" content="Days Between Dates · Everyday Calculators">
+<meta property="og:description" content="Count the days, weeks, months and years between two dates, or add days to a date.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Days Between Dates</span></nav>
+  <h1>Days Between Dates</h1>
+  <p class="lead">Count the days, weeks, months and years between two dates, or add days to a date.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <h2 class="sub">Days between two dates</h2>
+  <div class="row">
+    <label>Start date <input type="date" id="d1"></label>
+    <label>End date <input type="date" id="d2"></label>
+    <label class="check"><input type="checkbox" id="incl"> Include end day</label>
+  </div>
+  <output id="diff" class="result">—</output>
+  <p class="note" id="diff2"></p>
+</div>
+<div class="calc">
+  <h2 class="sub">Add or subtract days</h2>
+  <div class="row">
+    <label>Date <input type="date" id="d3"></label>
+    <label>Days (negative to subtract) <input type="number" id="nd" value="90" step="1"></label>
+  </div>
+  <output id="added" class="result">—</output>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>Counting days correctly</h2>
+<p>Whether to include the end day depends on what you are counting. For a hotel stay from the 1st to the 4th you pay for three nights, so you do not include the end day. For a rental or a project that runs from the 1st to the 4th inclusive, you count four days. Tick "include end day" when both ends belong to the period.</p>
+<h3>Common uses</h3>
+<ul>
+<li>Counting down to a holiday, wedding or deadline.</li>
+<li>Working out how many days remain on a notice period or warranty.</li>
+<li>Finding the exact age of a person, pet or project in years, months and days.</li>
+<li>Calculating a due date by adding a fixed number of days to an invoice date.</li>
+</ul>
+<p>All calculations use calendar dates, so daylight-saving changes never add or remove a day from the result.</p>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const $=id=>document.getElementById(id),iso=d=>d.toISOString().slice(0,10),DAY=86400000;
+const today=new Date();$('d1').value=iso(today);$('d3').value=iso(today);
+const nd=new Date(today);nd.setDate(nd.getDate()+30);$('d2').value=iso(nd);
+const fmt=d=>d.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+function utc(v){const [y,m,d]=v.split('-').map(Number);return Date.UTC(y,m-1,d);}
+function upd(){
+  const a=$('d1').value,b=$('d2').value;
+  if(a&&b){let days=Math.round((utc(b)-utc(a))/DAY)+($('incl').checked?Math.sign(utc(b)-utc(a)||1):0);
+    const abs=Math.abs(days);$('diff').textContent=`${abs.toLocaleString()} day${abs===1?'':'s'}`;
+    const wk=Math.floor(abs/7),rd=abs%7;
+    const A=new Date(Math.min(utc(a),utc(b))),B=new Date(Math.max(utc(a),utc(b)));
+    let y=B.getUTCFullYear()-A.getUTCFullYear(),m=B.getUTCMonth()-A.getUTCMonth(),d=B.getUTCDate()-A.getUTCDate();
+    if(d<0){m--;d+=new Date(Date.UTC(B.getUTCFullYear(),B.getUTCMonth(),0)).getUTCDate();}if(m<0){y--;m+=12;}
+    $('diff2').textContent=`${wk} week${wk===1?'':'s'} and ${rd} day${rd===1?'':'s'} · ${y} year${y===1?'':'s'}, ${m} month${m===1?'':'s'}, ${d} day${d===1?'':'s'}`;}
+  const c=$('d3').value,k=parseInt($('nd').value)||0;
+  if(c){const t=new Date(utc(c)+k*DAY);$('added').textContent=fmt(new Date(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate()));}
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd));upd();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>

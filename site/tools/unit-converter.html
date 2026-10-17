@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit Converter · Everyday Calculators</title>
+<meta name="description" content="Convert length, weight, temperature, volume and speed between metric and imperial units.">
+<meta property="og:title" content="Unit Converter · Everyday Calculators">
+<meta property="og:description" content="Convert length, weight, temperature, volume and speed between metric and imperial units.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M9 11h14M9 16h8M9 21h11" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>Everyday Calculators</span>
+    </a>
+    <nav class="menu" aria-label="Tools">
+      <details>
+        <summary>All tools</summary>
+        <div class="dropdown"><a href="/tools/percentage">Percentage Calculator</a><a href="/tools/tip">Tip Calculator</a><a href="/tools/bmi">BMI Calculator</a><a href="/tools/loan">Loan Payment Calculator</a><a href="/tools/compound-interest">Compound Interest Calculator</a><a href="/tools/unit-converter">Unit Converter</a><a href="/tools/date-difference">Days Between Dates</a><a href="/tools/word-counter">Word & Character Counter</a></div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<div class="ad ad-top" data-ad></div>
+
+<main class="wrap">
+
+<article class="tool">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Unit Converter</span></nav>
+  <h1>Unit Converter</h1>
+  <p class="lead">Convert length, weight, temperature, volume and speed between metric and imperial units.</p>
+  <section class="panel" id="tool">
+
+<div class="calc">
+  <div class="row">
+    <label>Category <select id="cat"></select></label>
+  </div>
+  <div class="row conv">
+    <label>From <input type="number" id="a" value="1" step="any"><select id="ua"></select></label>
+    <span class="of">=</span>
+    <label>To <input type="number" id="b" step="any"><select id="ub"></select></label>
+  </div>
+  <p class="note" id="formula"></p>
+</div>
+
+  </section>
+  <div class="ad ad-inline" data-ad></div>
+  <section class="prose">
+
+<h2>Metric and imperial units</h2>
+<p>Almost every country uses the metric system, built on the metre, kilogram and litre with units that scale by powers of ten. The United States still uses customary units such as inches, pounds and gallons for everyday measurement, and the United Kingdom mixes both, using miles for roads and pints for beer alongside metric elsewhere.</p>
+<h3>Handy conversions to remember</h3>
+<ul>
+<li>1 inch is exactly 2.54 cm, and 1 mile is about 1.6 km.</li>
+<li>1 kilogram is about 2.2 pounds; 1 pound is about 454 grams.</li>
+<li>1 US gallon is about 3.8 litres, but 1 UK gallon is about 4.5 litres, so recipes and fuel figures differ between the two.</li>
+<li>To convert Celsius to Fahrenheit, double it and add 30 for a rough answer, or multiply by 1.8 and add 32 for the exact one.</li>
+</ul>
+
+  </section>
+  <aside class="related">
+    <h2>More tools</h2>
+    <ul><li><a href="/tools/percentage">Percentage Calculator</a></li><li><a href="/tools/tip">Tip Calculator</a></li><li><a href="/tools/bmi">BMI Calculator</a></li><li><a href="/tools/loan">Loan Payment Calculator</a></li></ul>
+  </aside>
+</article>
+<script>
+const U={
+ Length:{Millimetres:0.001,Centimetres:0.01,Metres:1,Kilometres:1000,Inches:0.0254,Feet:0.3048,Yards:0.9144,Miles:1609.344},
+ Weight:{Grams:0.001,Kilograms:1,Tonnes:1000,Ounces:0.028349523125,Pounds:0.45359237,Stone:6.35029318},
+ Volume:{Millilitres:0.001,Litres:1,'US teaspoons':0.00492892159375,'US tablespoons':0.01478676478125,'US cups':0.2365882365,'US fluid ounces':0.0295735295625,'US pints':0.473176473,'US gallons':3.785411784,'UK pints':0.56826125,'UK gallons':4.54609},
+ Speed:{'Metres per second':1,'Kilometres per hour':1/3.6,'Miles per hour':0.44704,Knots:0.514444},
+ Area:{'Square metres':1,'Square feet':0.09290304,'Square yards':0.83612736,Acres:4046.8564224,Hectares:10000,'Square kilometres':1e6,'Square miles':2589988.110336},
+ Temperature:null
+};
+const T={Celsius:[x=>x,x=>x],Fahrenheit:[x=>(x-32)*5/9,x=>x*9/5+32],Kelvin:[x=>x-273.15,x=>x+273.15]};
+const $=id=>document.getElementById(id);
+const defaults={Length:['Miles','Kilometres'],Weight:['Pounds','Kilograms'],Volume:['US gallons','Litres'],Speed:['Miles per hour','Kilometres per hour'],Area:['Acres','Hectares'],Temperature:['Fahrenheit','Celsius']};
+Object.keys(U).forEach(k=>$('cat').add(new Option(k,k)));
+function fill(){const k=$('cat').value,names=k==='Temperature'?Object.keys(T):Object.keys(U[k]);
+ for(const s of ['ua','ub']){$(s).innerHTML='';names.forEach(n=>$(s).add(new Option(n,n)));}
+ $('ua').value=defaults[k][0];$('ub').value=defaults[k][1];conv('a');}
+function conv(src){const k=$('cat').value,from=$(src==='a'?'ua':'ub').value,to=$(src==='a'?'ub':'ua').value,v=parseFloat($(src).value),dst=src==='a'?'b':'a';
+ let out;
+ if(k==='Temperature')out=T[to][1](T[from][0](v));else out=v*U[k][from]/U[k][to];
+ $(dst).value=isFinite(out)?+out.toPrecision(10):'';
+ if(k==='Temperature'){$('formula').textContent='';return;}
+ const one=U[k][$('ua').value]/U[k][$('ub').value];
+ $('formula').textContent=`1 ${$('ua').value} = ${+one.toPrecision(8)} ${$('ub').value}`;}
+$('cat').addEventListener('change',fill);
+$('a').addEventListener('input',()=>conv('a'));$('b').addEventListener('input',()=>conv('b'));
+$('ua').addEventListener('change',()=>conv('a'));$('ub').addEventListener('change',()=>conv('a'));
+fill();
+</script>
+
+</main>
+
+<div class="ad ad-bottom" data-ad></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>© <span data-year></span> Everyday Calculators. Results are for general information only and are not professional financial, medical or legal advice.</p>
+    <p><a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </div>
+</footer>
+</body>
+</html>
