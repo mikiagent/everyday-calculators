@@ -16,6 +16,8 @@ with Google AdSense and then be left alone.
    **Project → Settings → Domains**. Google approves sites on their own domain far more
    readily than on a `*.vercel.app` address.
 
+To preview locally, run `node serve.mjs` and open http://localhost:4173.
+
 Or without GitHub, install the CLI and run it from this folder:
 
 ```bash
